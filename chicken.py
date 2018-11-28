@@ -165,7 +165,7 @@ def Main(operation, args):
             email = args[6]
             description = args[7]
             newContractHash = args[8]
-            migrateContract(account, code, needStorage, name, version, author, email, description, newContractHash)
+            return migrateContract(account, code, needStorage, name, version, author, email, description, newContractHash)
         else:
             return False
     ################  Methods for Admin Ends  ###############
@@ -390,9 +390,9 @@ def init():
         # Mark the contract has been deployed
         Put(GetContext(), DEPLOYED_KEY, _POSITIVE_)
 
-        Notify(["congrats, admin, you have deployed the contract successfuly"])
+        Notify(["congrats, admin, you have deployed the contract successfuly!"])
     else:
-        Notify(["Idiot admin, the contract has already been deployed."])
+        Notify(["Idiot admin, the contract has already been deployed!"])
         return False
     return True
 
@@ -468,8 +468,6 @@ def withdrawCommission(account):
     Require(checkAdmin(account))
     RequireWitness(account)
     Require(_transferONGFromContact(admin_, getCommissionAmount()))
-
-
 
     Put(GetContext(), TOTAL_ONG_KEY, Sub(totalOngAmount(), getCommissionAmount()))
     Delete(GetContext(), COMMISSION_KEY)
@@ -1282,14 +1280,14 @@ def _onReinvest(_addr, _dividends, _tokenAmount):
 SafeCheck.py
 """
 def Require(condition):
-    """
-    If condition is not satisfied, return false
-    :param condition: required condition
-    :return: True or false
-    """
-    if not condition:
-        Revert()
-    return True
+	"""
+	If condition is not satisfied, return false
+	:param condition: required condition
+	:return: True or false
+	"""
+	if not condition:
+		Revert()
+	return True
 
 def RequireScriptHash(key):
     """
@@ -1303,11 +1301,11 @@ def RequireScriptHash(key):
 
 def RequireWitness(witness):
     """
-    Checks the transaction sender is equal to the witness. If not
-    satisfying, revert the transaction.
-    :param witness: required transaction sender
-    :return: True if transaction sender or revert the transaction.
-    """
+	Checks the transaction sender is equal to the witness. If not
+	satisfying, revert the transaction.
+	:param witness: required transaction sender
+	:return: True if transaction sender or revert the transaction.
+	"""
     Require(CheckWitness(witness))
     return True
 
@@ -1317,29 +1315,29 @@ SafeMath.py
 
 def Add(a, b):
     """
-    Adds two numbers, throws on overflow.
-    """
+	Adds two numbers, throws on overflow.
+	"""
     c = a + b
     Require(c >= a)
     return c
 
 def Sub(a, b):
     """
-    Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
+	Substracts two numbers, throws on overflow (i.e. if subtrahend is greater than minuend).
     :param a: operand a
     :param b: operand b
     :return: a - b if a - b > 0 or revert the transaction.
-    """
+	"""
     Require(a>=b)
     return a-b
 
 def Mul(a, b):
     """
-    Multiplies two numbers, throws on overflow.
+	Multiplies two numbers, throws on overflow.
     :param a: operand a
     :param b: operand b
     :return: a - b if a - b > 0 or revert the transaction.
-    """
+	"""
     if a == 0:
         return 0
     c = a * b
@@ -1348,8 +1346,8 @@ def Mul(a, b):
 
 def Div(a, b):
     """
-    Integer division of two numbers, truncating the quotient.
-    """
+	Integer division of two numbers, truncating the quotient.
+	"""
     Require(b > 0)
     c = a / b
     return c
